@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import "./globals.css";
+import { Inter } from "next/font/google"
+
+const font = Inter({
+  subsets: ["latin"]
+})
 
 export const metadata: Metadata = {
-  title: "Raphael Intranet",
-  description: "Intranet para empresa Kian Importação LTDA",
+  title: "Kian Iluminação",
+  description: "Intranet Kian Iluminação",
 };
 
 export default function RootLayout({
@@ -13,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={font.className}
       >
         {children}
       </body>
