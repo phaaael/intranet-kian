@@ -7,7 +7,7 @@ const font = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Kian Iluminação",
+  title: "Intranet | Kian",
   description: "Intranet Kian Iluminação",
 };
 
