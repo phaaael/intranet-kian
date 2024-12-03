@@ -27,8 +27,8 @@ export default function Navbar({ userName }: { userName: string }) {
           </Link>
         </div>
         <nav className="flex items-center space-x-4">
-          <Link href="#" className="text-gray-700 hover:text-gray-900">
-            <Button variant={'link'} className={cn( pathname === '#' ? 'underline' : '' )} >Início</Button>
+          <Link href="/home" className="text-gray-700 hover:text-gray-900">
+            <Button variant={'link'} className={cn( pathname === '/home' ? 'underline' : '' )} >Início</Button>
           </Link>
 
           <Link href="#" className="text-gray-700 hover:text-gray-900">
@@ -43,8 +43,8 @@ export default function Navbar({ userName }: { userName: string }) {
             <Button variant={'link'} className={cn( pathname === '#' ? 'underline' : '' )} >Galeria de Fotos</Button>
           </Link>
 
-          <Link href="#" className="text-gray-700 hover:text-gray-900">
-            <Button variant={'link'} className={cn( pathname === '#' ? 'underline' : '' )} >Listagem de Ramais</Button>
+          <Link href="/listagem-de-ramais" className="text-gray-700 hover:text-gray-900">
+            <Button variant={'link'} className={cn( pathname === '/listagem-de-ramais' ? 'underline' : '' )} >Listagem de Ramais</Button>
           </Link>
 
           <DropdownMenu>
