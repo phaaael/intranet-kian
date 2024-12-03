@@ -22,8 +22,8 @@ export default function LoginPage() {
                   <CardContent>
                       <LoginForm />
                   </CardContent>
-                  <div className="items-center justify-center">
-                    <p className="text-sm text-muted-foreground mt-3 items-center justify-center">
+                  <div className="flex items-center justify-center mb-4">
+                    <p className="text-sm text-muted-foreground mt-3">
                       Não possui cadastro?{' '}
                     <Link className="text-gray-800 hover:underline" href="/register">
                       Registre-se
