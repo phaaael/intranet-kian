@@ -27,18 +27,24 @@ export default function Navbar({ userName }: { userName: string }) {
           </Link>
         </div>
         <nav className="flex items-center space-x-4">
-          <Link
-            href="#"
-            className="text-gray-700 hover:text-gray-900"
-          >
-            <Button
-              variant={'link'}
-              className={cn(
-                pathname === '#' ? 'underline' : ''
-              )}
-            >
-              Listagem de Ramais
-            </Button>
+          <Link href="#" className="text-gray-700 hover:text-gray-900">
+            <Button variant={'link'} className={cn( pathname === '#' ? 'underline' : '' )} >Início</Button>
+          </Link>
+
+          <Link href="#" className="text-gray-700 hover:text-gray-900">
+            <Button variant={'link'} className={cn( pathname === '#' ? 'underline' : '' )} >Anúncios</Button>
+          </Link>
+
+          <Link href="#" className="text-gray-700 hover:text-gray-900">
+            <Button variant={'link'} className={cn( pathname === '#' ? 'underline' : '' )} >Requisições</Button>
+          </Link>
+
+          <Link href="#" className="text-gray-700 hover:text-gray-900">
+            <Button variant={'link'} className={cn( pathname === '#' ? 'underline' : '' )} >Galeria de Fotos</Button>
+          </Link>
+
+          <Link href="#" className="text-gray-700 hover:text-gray-900">
+            <Button variant={'link'} className={cn( pathname === '#' ? 'underline' : '' )} >Listagem de Ramais</Button>
           </Link>
 
           <DropdownMenu>
