@@ -14,7 +14,6 @@ export default async function registerAction(
     _prevState: unknown,
     formData: FormData
 ): Promise<{ message?: string; success: boolean } | void> {
-    // Verifique se o Prisma Client foi inicializado
     if (!db || !db.rp_users) {
         console.error("Prisma Client não inicializado corretamente:", db);
         return { message: "Erro interno no servidor", success: false };
