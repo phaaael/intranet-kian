@@ -1,9 +1,9 @@
 'use client'
 
 import Form from "next/form"
-import { Button } from '../components/ui/button'
-import { Input } from '../components/ui/input'
-import { Label } from '../components/ui/label'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import loginAction from "./loginAction"
 import { useActionState } from "react"
 

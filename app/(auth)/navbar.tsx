@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '../../components/ui/button';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import {
   DropdownMenu,
@@ -9,8 +9,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../../components/ui/dropdown-menu';
-import { cn } from '../../lib/utils';
+} from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
 import { User } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Form from 'next/form';

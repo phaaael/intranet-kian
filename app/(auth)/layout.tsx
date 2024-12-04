@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import Navbar from './navbar';
-import { auth } from '../../auth';
+import { auth } from '@/auth';
 import Footer from './footer';
 
 export default async function HomeLayout({
