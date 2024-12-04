@@ -1,30 +1,19 @@
+import { compareSync } from 'bcrypt-ts'
 import db from './db'
 
-type PhoneDetails = {
-  phone: string
-  employee: string
-  sector: string
-  walk: string
-};
+type User = {
+    name: string
+    email: string
+    password?: string
+}
+export default  async function findUserByCredencials(email: string, password: string): Promise<User | null> {
+    const user = await db.rp_users.findFirst({ where: { email: email } })
 
-export default async function findPhoneByNumber(phone: string): Promise<PhoneDetails | null> {
-  try {
-    const phoneRecord = await db.rp_phones.findFirst({
-      where: { phone: phone }
-    })
+    if (!user || !user.password || !user.name) return null
 
-    if (!phoneRecord || !phoneRecord.phone || !phoneRecord.employee || !phoneRecord.sector || !phoneRecord.walk) {
-      return null;
-    }
+    const passwordMatch = compareSync(password, user.password)
 
-    return {
-      phone: phoneRecord.phone,
-      employee: phoneRecord.employee,
-      sector: phoneRecord.sector,
-      walk: phoneRecord.walk,
-    }
-  } catch (error) {
-    console.error("Erro ao buscar o telefone:", error)
+    if(passwordMatch) return { email: user.email, name: user.name}
+
     return null
-  }
 }
