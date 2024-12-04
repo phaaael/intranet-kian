@@ -44,7 +44,7 @@ export default function Navbar({ userName }: { userName: string }) {
           </Link>
 
           <Link href="/listagem-de-ramais" className="text-gray-700 hover:text-gray-900">
-            <Button variant={'link'} className={cn( pathname === '/listagem-de-ramais' ? 'underline' : '' )} >Listagem de Ramais</Button>
+            <Button variant={'link'} className={cn( pathname === '/listagem-de-ramais' ? 'underline' : '' )} >Ramais</Button>
           </Link>
 
           <DropdownMenu>

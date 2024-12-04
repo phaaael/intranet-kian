@@ -14,3 +14,11 @@ model rp_users {
   password  String
   createdAt DateTime @default(now())
 }
+
+model rp_phones {
+  phoneID  Int    @id @default(autoincrement())
+  phone    String @unique
+  employee String
+  sector   String
+  walk     String
+}
