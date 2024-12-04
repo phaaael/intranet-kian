@@ -25,7 +25,7 @@ export default function LoginPage() {
                   <div className="flex items-center justify-center mb-4">
                     <p className="text-sm text-muted-foreground mt-3">
                       Não possui cadastro?{' '}
-                    <Link className="text-gray-800 hover:underline" href="/register">
+                    <Link className="text-gray-800 hover:underline" href="/cadastro">
                       Registre-se
                     </Link>
                       .

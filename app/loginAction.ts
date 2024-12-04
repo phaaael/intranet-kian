@@ -18,7 +18,7 @@ export default async function loginAction(_prevState: any, formData: FormData) {
             email: formData.get('email') as string,
             password: formData.get('password') as string,
             redirect: true,
-            redirectTo: '/home'
+            redirectTo: '/inicio'
         })
 
     } catch(e: any) {
