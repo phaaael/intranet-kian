@@ -71,10 +71,10 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
   return (
     <div>
       <div className="flex flex-col items-center mb-4">
-        <p className="text-sm text-gray-200">Atalhos:</p>
-        <p className="text-sm text-gray-400">Quem ligou: #67</p>
-        <p className="text-sm text-gray-400">Ver nº do ramal: *87*</p>
-        <p className="text-sm text-gray-400">Passar ligações: flash + nº do ramal</p>
+        <p className="text-sm text-gray-700">Atalhos:</p>
+        <p className="text-sm">Quem ligou: #67</p>
+        <p className="text-sm">Ver nº do ramal: *87*</p>
+        <p className="text-sm">Passar ligações: flash + nº do ramal</p>
       </div>
       <Input
         type="text"
