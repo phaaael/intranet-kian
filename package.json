@@ -17,6 +17,7 @@
     "bcrypt-ts": "^5.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.5.1",
     "lucide-react": "^0.464.0",
     "next": "15.0.3",
     "next-auth": "^5.0.0-beta.25",
