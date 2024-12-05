@@ -32,8 +32,8 @@ export default function Navbar({ userName }: { userName: string }) {
             <Button variant={'link'} className={cn( pathname === '/inicio' ? 'underline' : '' )} >Início</Button>
           </Link>
 
-          <Link href="#" className="text-gray-700 hover:text-gray-900">
-            <Button variant={'link'} className={cn( pathname === '#' ? 'underline' : '' )} >Requisições</Button>
+          <Link href="/requisicoes" className="text-gray-700 hover:text-gray-900">
+            <Button variant={'link'} className={cn( pathname === '/requisicoes' ? 'underline' : '' )} >Requisições</Button>
           </Link>
 
           <Link href="/cardapio" className="text-gray-700 hover:text-gray-900">
