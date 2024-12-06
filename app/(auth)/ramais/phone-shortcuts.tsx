@@ -18,7 +18,7 @@ export default function PhoneShortcuts() {
             </div>
 
             <div className="flex justify-between items-center py-2">
-              <span className="text-sm text-gray-700">Passar Ligações:</span>
+              <span className="text-sm text-gray-700">Transferir Ligações:</span>
               <span className="bg-red-600 text-white px-4 py-1 text-sm font-bold">Flash + Nº</span>
             </div>
           </div>
