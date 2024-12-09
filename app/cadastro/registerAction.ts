@@ -5,9 +5,10 @@ import { hash } from 'bcrypt-ts';
 import { redirect } from 'next/navigation';
 
 interface RegisterFormData {
-    name: string;
-    email: string;
-    password: string;
+    name: string
+    email: string
+    password: string
+    password_confirmation: string
 }
 
 export default async function registerAction(
@@ -22,9 +23,11 @@ export default async function registerAction(
     const entries = Array.from(formData.entries());
     const data = Object.fromEntries(entries) as unknown as RegisterFormData;
 
-    if (!data.email || !data.name || !data.password) {
+    if (!data.email || !data.name || !data.password || !data.password_confirmation) {
         return { message: 'Preencha todos os campos!', success: false };
     }
+
+    if (data.password !== data.password_confirmation) return { message: 'As senhas não coincidem.', success: false }
 
     const user = await db.rp_users.findUnique({
         where: { email: data.email },

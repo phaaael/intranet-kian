@@ -32,6 +32,10 @@ export default function RegisterForm() {
                 <Input type="password" name="password" placeholder="********" />
                 </div>
                 <div>
+                <Label>Confirmar Senha</Label>
+                <Input type="password" name="password_confirmation" placeholder="********" />
+                </div>
+                <div>
                 <Button disabled={isPending} className="w-full mt-6" type="submit">
                     Registrar
                 </Button>
