@@ -83,12 +83,12 @@ export default function Navbar({ userName }: { userName: string }) {
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="mr-4">
-              <DropdownMenuLabel className="font-light uppercase text-xs">
+              <DropdownMenuLabel className="text-center font-light uppercase text-xs">
                 {userName}
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Form action={logoutAction} className="text-center justify-center bg-red-600 hover:bg-red-500">
+              <DropdownMenuItem>
+                <Form action={logoutAction} className="text-center justify-center bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded !important">
                   <button className="">Desconectar-se</button>
                 </Form>
               </DropdownMenuItem>
@@ -150,7 +150,7 @@ export default function Navbar({ userName }: { userName: string }) {
               </Button>
             </Link>
             <Form action={logoutAction}>
-              <button className="text-gray-700 hover:text-gray-900">Logout</button>
+              <button className="text-gray-700 hover:text-gray-900">Desconectar-se</button>
             </Form>
           </nav>
         </div>
