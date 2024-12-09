@@ -88,8 +88,8 @@ export default function Navbar({ userName }: { userName: string }) {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Form action={logoutAction}>
-                  <button>Logout</button>
+                <Form action={logoutAction} className="text-center justify-center bg-red-600 hover:bg-red-500">
+                  <button className="">Desconectar-se</button>
                 </Form>
               </DropdownMenuItem>
             </DropdownMenuContent>
