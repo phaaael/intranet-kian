@@ -12,6 +12,7 @@ model rp_users {
   email     String   @unique
   name      String
   password  String
+  role String @default("membro")
   createdAt DateTime @default(now())
 }
 
