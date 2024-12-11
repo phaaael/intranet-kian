@@ -31,10 +31,8 @@ export default function Page() {
     const handleMenuUpdate = () => {
         setUpdateTrigger((prev) => prev + 1)
     }
-
-    if (loading) {
-        return <p>Carregando...</p>
-    }
+    
+    if (loading) return <div className="w-8 h-8 border-4 border-gray-300 border-t-4 border-t-neutral-500 rounded-full animate-spin" />
 
     return (
         <div className="flex space-x-4 p-6 text-black">
