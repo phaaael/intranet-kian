@@ -9,6 +9,9 @@ const font = Inter({
 export const metadata: Metadata = {
   title: "Intranet | Kian",
   description: "Intranet Kian Iluminação",
+  icons: {
+    icon: "/kian-icon.png"
+  }
 };
 
 export default function RootLayout({
