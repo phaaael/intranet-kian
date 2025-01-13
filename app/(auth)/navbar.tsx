@@ -108,12 +108,13 @@ export default function Navbar({ userName }: { userName: string }) {
               <DropdownMenuLabel className="text-center font-light uppercase text-xs">
                 {userName}
               </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className='text-center justify-center'>
-                {isAdmin && 
-                  <button><Link href="#">Administração</Link></button>
-                }
-              </DropdownMenuItem>
+              { isAdmin && (
+                <>
+                  <DropdownMenuSeparator /><DropdownMenuItem className='text-center justify-center'>
+                    <button><Link href="#">Administração</Link></button>
+                  </DropdownMenuItem>
+                </>
+              ) }
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Form action={logoutAction} className="text-center justify-center bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded !important">
