@@ -15,11 +15,33 @@ import { User, Menu } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import Form from 'next/form'
 import logoutAction from './(logout)/logoutAction'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Navbar({ userName }: { userName: string }) {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
+
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+      const fetchPermissions = async () => {
+          try {
+              const response = await fetch("/api/check-permissions")
+              if (!response.ok) {
+                  throw new Error("Erro ao verificar permissões")
+              }
+              const data = await response.json()
+              setIsAdmin(data.isAdmin)
+          } catch (error) {
+              console.error("Erro ao verificar permissões:", error)
+          } finally {
+              setLoading(false)
+          }
+      }
+
+      fetchPermissions()
+  }, [])
 
   return (
     <header className="bg-white shadow-sm">
@@ -86,6 +108,12 @@ export default function Navbar({ userName }: { userName: string }) {
               <DropdownMenuLabel className="text-center font-light uppercase text-xs">
                 {userName}
               </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className='text-center justify-center'>
+                {isAdmin && 
+                  <button><Link href="#">Administração</Link></button>
+                }
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Form action={logoutAction} className="text-center justify-center bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded !important">
