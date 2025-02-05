@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import React, { useEffect, useState } from "react";
-import { Input } from "@/components/ui/input";
+import React, { useEffect, useState } from "react"
+import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -9,64 +9,72 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { findPhones, updatePhone } from "@/lib/phone";
+} from "@/components/ui/table"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
+import { findPhones, updatePhone } from "@/lib/phone"
 
 const useCheckPermissions = () => {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
     const checkPermissions = async () => {
       try {
-        const response = await fetch("/api/check-permissions");
-        const data = await response.json();
-        setIsAdmin(data.isAdmin);
+        const response = await fetch("/api/check-permissions")
+        const data = await response.json()
+        setIsAdmin(data.isAdmin)
       } catch (error) {
-        console.error("Erro ao verificar permissões:", error);
+        console.error("Erro ao verificar permissões:", error)
       }
-    };
+    }
 
-    checkPermissions();
-  }, []);
+    checkPermissions()
+  }, [])
 
-  return isAdmin;
-};
+  return isAdmin
+}
 
 type Employee = {
-  phone: string;
-  employee: string;
-  sector: string;
-  walk: string;
-};
+  phoneID: number
+  phone: string
+  employee: string
+  sector: string
+  walk: string
+}
 
 type PhoneDashboardProps = {
-  rowsPerPage: number;
-};
+  rowsPerPage: number
+}
 
 export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
-  const [employees, setEmployees] = useState<Employee[]>([]);
-  const [currentEmployees, setCurrentEmployees] = useState<Employee[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [editMode, setEditMode] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [currentEdit, setCurrentEdit] = useState<{ id: string; field: keyof Employee; value: string } | null>(null);
-  const isAdmin = useCheckPermissions();
+  const [employees, setEmployees] = useState<Employee[]>([])
+  const [currentEmployees, setCurrentEmployees] = useState<Employee[]>([])
+  const [searchTerm, setSearchTerm] = useState("")
+  const [currentPage, setCurrentPage] = useState(1)
+  const [editMode, setEditMode] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [currentEdit, setCurrentEdit] = useState<{ id: string; field: keyof Employee; value: string } | null>(null)
+  const isAdmin = useCheckPermissions()
 
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const data = await findPhones();
-        setEmployees(data);
+        const data = await findPhones()
+        const formattedData = data.map((item: any, index: number) => ({
+          phoneID: item.phoneID ?? index + 1,
+          phone: item.phone,
+          employee: item.employee,
+          sector: item.sector,
+          walk: item.walk,
+        }))
+        setEmployees(formattedData)
       } catch (error) {
-        console.error("Erro ao buscar os dados dos ramais:", error);
+        console.error("Erro ao buscar os dados dos ramais:", error)
       }
-    };
+    }
 
-    fetchEmployees();
-  }, []);
+    fetchEmployees()
+  }, [])
 
   useEffect(() => {
     const filteredEmployees = employees.filter((employee) =>
@@ -74,51 +82,56 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
         .join(" ")
         .toLowerCase()
         .includes(searchTerm.toLowerCase())
-    );
+    )
 
-    const startIndex = (currentPage - 1) * rowsPerPage;
-    const endIndex = startIndex + rowsPerPage;
+    const startIndex = (currentPage - 1) * rowsPerPage
+    const endIndex = startIndex + rowsPerPage
 
-    setCurrentEmployees(filteredEmployees.slice(startIndex, endIndex));
-  }, [employees, searchTerm, currentPage, rowsPerPage]);
+    setCurrentEmployees(filteredEmployees.slice(startIndex, endIndex))
+  }, [employees, searchTerm, currentPage, rowsPerPage])
 
   const translateFieldName = (field: keyof Employee) => {
     const translations: Record<keyof Employee, string> = {
-      phone: "ramal",
-      employee: "funcionário",
-      sector: "setor",
-      walk: "andar",
-    };
-    return translations[field] || field;
-  };
+      phone: "Ramal",
+      employee: "Funcionário",
+      sector: "Setor",
+      walk: "Andar",
+      phoneID: "ID"
+    }
+    return translations[field] || field
+  }
 
   const handleSearch = (term: string) => {
-    setSearchTerm(term);
-    setCurrentPage(1);
-  };
+    setSearchTerm(term)
+    setCurrentPage(1)
+  }
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+    setCurrentPage(page)
+  }
 
-  const handleDialogOpen = (id: string, field: keyof Employee, value: string) => {
+  const handleDialogOpen = (id: number | string, field: keyof Employee, value: string) => {
     if (editMode && isAdmin) {
-      setCurrentEdit({ id, field, value });
-      setDialogOpen(true);
+      setCurrentEdit({ id: String(id), field, value })
+      setDialogOpen(true)
     }
-  };
+  }
 
   const handleDialogSave = async () => {
     if (currentEdit) {
-      await updatePhone(currentEdit.id, { [currentEdit.field]: currentEdit.value });
-      setEmployees((prev) =>
-        prev.map((emp) =>
-          emp.phone === currentEdit.id ? { ...emp, [currentEdit.field]: currentEdit.value } : emp
+      try {
+        await updatePhone(parseInt(currentEdit.id), { [currentEdit.field]: currentEdit.value })
+        setEmployees((prev) =>
+          prev.map((emp) =>
+            emp.phoneID.toString() === currentEdit.id ? { ...emp, [currentEdit.field]: currentEdit.value } : emp
+          )
         )
-      );
-      setDialogOpen(false);
+        setDialogOpen(false)
+      } catch (error) {
+        console.error("Erro ao atualizar o ramal:", error)
+      }
     }
-  };
+  }
 
   const totalPages = Math.ceil(
     employees.filter((employee) =>
@@ -127,7 +140,7 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
         .toLowerCase()
         .includes(searchTerm.toLowerCase())
     ).length / rowsPerPage
-  );
+  )
 
   return (
     <div>
@@ -163,19 +176,21 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
               currentEmployees.map((employee, index) => (
                 <TableRow key={index} className="border-red-300">
                   {Object.entries(employee).map(([key, value]) => (
-                    <TableCell
-                      key={key}
-                      onClick={() => handleDialogOpen(employee.phone, key as keyof Employee, value)}
-                      className={editMode && isAdmin ? "cursor-pointer hover:bg-gray-100" : ""}
-                    >
-                      {value}
-                    </TableCell>
+                    key !== "phoneID" && (
+                      <TableCell
+                        key={key}
+                        onClick={() => handleDialogOpen(employee.phoneID, key as keyof Employee, String(value))}
+                        className={editMode && isAdmin ? "cursor-pointer hover:bg-gray-100" : ""}
+                      >
+                        {value}
+                      </TableCell>
+                    )
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={4} className="text-center">
+                <TableCell colSpan={5} className="text-center">
                   Nenhum resultado encontrado.
                 </TableCell>
               </TableRow>
@@ -219,8 +234,8 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
               }
             />
             <DialogFooter>
-              <Button onClick={handleDialogSave}>Salvar</Button>
-              <Button variant="secondary" onClick={() => setDialogOpen(false)}>
+              <Button className="bg-red-600 rounded hover:bg-red-500 transition-colors" onClick={handleDialogSave}>Salvar</Button>
+              <Button className="bg-neutral-200 rounded hover:bg-neutral-300 transition-colors" variant="secondary" onClick={() => setDialogOpen(false)}>
                 Cancelar
               </Button>
             </DialogFooter>
@@ -228,5 +243,5 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
         </Dialog>
       )}
     </div>
-  );
+  )
 }
