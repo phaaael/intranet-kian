@@ -134,10 +134,24 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
       }
     }
   }
-
-  const handleIncludeSave = () => {
-    insertPhone( newRecord.phone, newRecord.employee, newRecord.sector, newRecord.walk )
-    setIncludeDialogOpen(false)
+  
+  const handleIncludeSave = async () => {
+    try {
+      await insertPhone( newRecord.phone, newRecord.employee, newRecord.sector, newRecord.walk )
+      const data = await findPhones()
+      const formattedData = data.map((item: any, index: number) => ({
+        phoneID: item.phoneID ?? index + 1,
+        phone: item.phone,
+        employee: item.employee,
+        sector: item.sector,
+        walk: item.walk
+      }))
+      
+      setEmployees(formattedData)
+      setIncludeDialogOpen(false)
+    } catch(error) {
+      console.error("Erro ao incluir registro", error)
+    }
   }
 
   const totalPages = Math.ceil(
