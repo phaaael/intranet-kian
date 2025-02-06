@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
-import { findPhones, updatePhone } from "@/lib/phone"
+import { findPhones, updatePhone, insertPhone } from "@/lib/phone"
 
 const useCheckPermissions = () => {
   const [isAdmin, setIsAdmin] = useState(false)
@@ -53,6 +53,8 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const [editMode, setEditMode] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [includeDialogOpen, setIncludeDialogOpen] = useState(false)
+  const [newRecord, setNewRecord] = useState<Employee>({ phoneID: 0, phone: '', employee: '', sector: '', walk: '' })
   const [currentEdit, setCurrentEdit] = useState<{ id: string; field: keyof Employee; value: string } | null>(null)
   const isAdmin = useCheckPermissions()
 
@@ -133,6 +135,11 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
     }
   }
 
+  const handleIncludeSave = () => {
+    insertPhone( newRecord.phone, newRecord.employee, newRecord.sector, newRecord.walk )
+    setIncludeDialogOpen(false)
+  }
+
   const totalPages = Math.ceil(
     employees.filter((employee) =>
       Object.values(employee)
@@ -150,6 +157,15 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
           className="mb-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500"
         >
           {editMode ? "Desabilitar Edição" : "Habilitar Edição"}
+        </Button>
+      )}
+
+      {isAdmin && (
+        <Button
+        onClick={() => setIncludeDialogOpen(true)}
+          className="mb-4 m-1 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500"
+        >
+        { "Incluir Registro" }
         </Button>
       )}
 
@@ -190,7 +206,7 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={5} className="text-center">
+                <TableCell colSpan={5} className="text-center">"
                   Nenhum resultado encontrado.
                 </TableCell>
               </TableRow>
@@ -238,6 +254,24 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
               <Button className="bg-neutral-200 rounded hover:bg-neutral-300 transition-colors" variant="secondary" onClick={() => setDialogOpen(false)}>
                 Cancelar
               </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+      
+      {isAdmin && (
+        <Dialog open={includeDialogOpen} onOpenChange={setIncludeDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Incluir Novo Registro</DialogTitle>
+            </DialogHeader>
+            <Input placeholder="Ramal" value={newRecord.phone} onChange={(e) => setNewRecord(prev => ({ ...prev, phone: e.target.value }))} />
+            <Input placeholder="Funcionário" value={newRecord.employee} onChange={(e) => setNewRecord(prev => ({ ...prev, employee: e.target.value }))} />
+            <Input placeholder="Setor" value={newRecord.sector} onChange={(e) => setNewRecord(prev => ({ ...prev, sector: e.target.value }))} />
+            <Input placeholder="Andar" value={newRecord.walk} onChange={(e) => setNewRecord(prev => ({ ...prev, walk: e.target.value }))} />
+            <DialogFooter>
+              <Button className="bg-red-600 rounded hover:bg-red-500 transition-colors" onClick={handleIncludeSave}>Salvar</Button>
+              <Button className="bg-neutral-200 rounded hover:bg-neutral-300 transition-colors" variant="secondary" onClick={() => setIncludeDialogOpen(false)}>Cancelar</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>

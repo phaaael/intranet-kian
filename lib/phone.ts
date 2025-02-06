@@ -58,3 +58,24 @@ export const updatePhone = async (
     throw error
   }
 }
+
+export const insertPhone = async ( phone: string, employee: string, sector: string, walk: string ) => {
+  try {
+    const response = await fetch("/api/insert-phone", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ phone, employee, sector, walk }),
+    })
+
+    if (!response.ok) {
+      const errorMessage = await response.text()
+      throw new Error(`Erro ao inserir ramal: ${errorMessage}`)
+    }
+
+    return await response.json()
+  } catch(error) {
+    console.error("Erro na atualização do ramal:", error)
+  }
+}

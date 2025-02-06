@@ -34,6 +34,6 @@ export async function POST(request: Request) {
     return NextResponse.json(updatedPhone, { status: 200 })
   } catch (error) {
         console.error("Erro ao atualizar o ramal:", error)
-        return NextResponse.json({ message: "Erro interno do servidor", error: error.message }, { status: 500 })
+        return NextResponse.json({ message: "Erro interno do servidor"}, { status: 500 })
   }
 }
