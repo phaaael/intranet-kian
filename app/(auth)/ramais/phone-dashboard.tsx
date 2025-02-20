@@ -197,7 +197,7 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
               <TableHead className="w-[100px]">Ramal</TableHead>
               <TableHead>Funcionário</TableHead>
               <TableHead>Setor</TableHead>
-              <TableHead className="text-right">Andar</TableHead>
+              <TableHead>Andar</TableHead>
             </TableRow>
           </TableHeader>
 
