@@ -142,7 +142,7 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
       if (!newRecord.phone?.trim()) {
         toast({
           variant: "destructive",
-          title: "Telefone obrigatório",
+          title: "Ramal obrigatório",
           description: "Por favor, preencha o campo de telefone antes de salvar.",
         })
         return
