@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
+import { useToast } from "@/hooks/use-toast"
 import {
   Table,
   TableBody,
@@ -47,6 +48,7 @@ type PhoneDashboardProps = {
 }
 
 export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
+  const { toast } = useToast()
   const [employees, setEmployees] = useState<Employee[]>([])
   const [currentEmployees, setCurrentEmployees] = useState<Employee[]>([])
   const [searchTerm, setSearchTerm] = useState("")
@@ -137,6 +139,42 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
   
   const handleIncludeSave = async () => {
     try {
+      if (!newRecord.phone?.trim()) {
+        toast({
+          variant: "destructive",
+          title: "Telefone obrigatório",
+          description: "Por favor, preencha o campo de telefone antes de salvar.",
+        })
+        return
+      }
+  
+      if (!newRecord.employee?.trim()) {
+        toast({
+          variant: "destructive",
+          title: "Funcionário obrigatório",
+          description: "Por favor, informe o nome do funcionário.",
+        })
+        return
+      }
+  
+      if (!newRecord.sector?.trim()) {
+        toast({
+          variant: "destructive",
+          title: "Setor obrigatório",
+          description: "O campo setor precisa ser preenchido.",
+        })
+        return
+      }
+  
+      if (!newRecord.walk?.trim()) {
+        toast({
+          variant: "destructive",
+          title: "Andar obrigatório",
+          description: "Indique em qual andar o ramal se encontra.",
+        })
+        return
+      }
+      
       await insertPhone( newRecord.phone, newRecord.employee, newRecord.sector, newRecord.walk )
       const data = await findPhones()
       const formattedData = data.map((item: any, index: number) => ({

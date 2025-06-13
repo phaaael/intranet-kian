@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog'
 import { cn } from '@/lib/utils'
 import { User, Menu } from 'lucide-react'
 import { usePathname } from 'next/navigation'
@@ -20,9 +21,9 @@ import { useEffect, useState } from 'react'
 export default function Navbar({ userName }: { userName: string }) {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
-
   const [isAdmin, setIsAdmin] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [dialogOpen, setDialogOpen] = useState(false)
 
   useEffect(() => {
       const fetchPermissions = async () => {
@@ -39,7 +40,6 @@ export default function Navbar({ userName }: { userName: string }) {
               setLoading(false)
           }
       }
-
       fetchPermissions()
   }, [])
 
@@ -58,44 +58,19 @@ export default function Navbar({ userName }: { userName: string }) {
 
         <nav className="hidden md:flex items-center space-x-4">
           <Link href="/inicio">
-            <Button
-              variant="link"
-              className={cn(pathname === '/inicio' ? 'underline' : '')}
-            >
-              Início
-            </Button>
+            <Button variant="link" className={cn(pathname === '/inicio' ? 'underline' : '')}>Início</Button>
           </Link>
           <Link href="/requisicoes">
-            <Button
-              variant="link"
-              className={cn(pathname === '/requisicoes' ? 'underline' : '')}
-            >
-              Requisições
-            </Button>
+            <Button variant="link" className={cn(pathname === '/requisicoes' ? 'underline' : '')}>Requisições</Button>
           </Link>
           <Link href="/cardapio">
-            <Button
-              variant="link"
-              className={cn(pathname === '/cardapio' ? 'underline' : '')}
-            >
-              Cardápio
-            </Button>
+            <Button variant="link" className={cn(pathname === '/cardapio' ? 'underline' : '')}>Cardápio</Button>
           </Link>
           <Link href="/fotos">
-            <Button
-              variant="link"
-              className={cn(pathname === '/fotos' ? 'underline' : '')}
-            >
-              Fotos
-            </Button>
+            <Button variant="link" className={cn(pathname === '/fotos' ? 'underline' : '')}>Fotos</Button>
           </Link>
           <Link href="/ramais">
-            <Button
-              variant="link"
-              className={cn(pathname === '/ramais' ? 'underline' : '')}
-            >
-              Ramais
-            </Button>
+            <Button variant="link" className={cn(pathname === '/ramais' ? 'underline' : '')}>Ramais</Button>
           </Link>
 
           <DropdownMenu>
@@ -110,80 +85,37 @@ export default function Navbar({ userName }: { userName: string }) {
               </DropdownMenuLabel>
               { isAdmin && (
                 <>
-                  <DropdownMenuSeparator /><DropdownMenuItem className='text-center justify-center'>
-                    <button><Link href="#">Administração</Link></button>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className='text-center justify-center'>
+                    <button onClick={() => setDialogOpen(true)}>Administração</button>
                   </DropdownMenuItem>
                 </>
               ) }
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Form action={logoutAction} className="text-center justify-center bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded !important">
-                  <button className="">Desconectar-se</button>
+                  <button>Desconectar-se</button>
                 </Form>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </nav>
-
-        <div className="md:hidden flex items-center">
-          <button
-            className="text-gray-700 hover:text-gray-900"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <Menu size={24} />
-          </button>
-        </div>
       </div>
 
-      {menuOpen && (
-        <div className="md:hidden bg-white shadow-md">
-          <nav className="flex flex-col space-y-2 px-4 py-4">
-            <Link href="/inicio">
-              <Button
-                variant="link"
-                className={cn(pathname === '/inicio' ? 'underline' : '')}
-              >
-                Início
-              </Button>
-            </Link>
-            <Link href="/requisicoes">
-              <Button
-                variant="link"
-                className={cn(pathname === '/requisicoes' ? 'underline' : '')}
-              >
-                Requisições
-              </Button>
-            </Link>
-            <Link href="/cardapio">
-              <Button
-                variant="link"
-                className={cn(pathname === '/cardapio' ? 'underline' : '')}
-              >
-                Cardápio
-              </Button>
-            </Link>
-            <Link href="/fotos">
-              <Button
-                variant="link"
-                className={cn(pathname === '/fotos' ? 'underline' : '')}
-              >
-                Fotos
-              </Button>
-            </Link>
-            <Link href="/ramais">
-              <Button
-                variant="link"
-                className={cn(pathname === '/ramais' ? 'underline' : '')}
-              >
-                Ramais
-              </Button>
-            </Link>
-            <Form action={logoutAction}>
-              <button className="text-gray-700 hover:text-gray-900">Desconectar-se</button>
-            </Form>
-          </nav>
-        </div>
-      )}
+      <Dialog open={dialogOpen} onOpenChange={(open) => setDialogOpen(open)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Administração</DialogTitle>
+            <DialogDescription>Gerencie as configurações administrativas do sistema.</DialogDescription>
+          </DialogHeader>
+          <div className="p-4">
+            <p>Opções administrativas virão aqui...</p>
+          </div>
+          <DialogClose asChild>
+            <Button variant="outline" onClick={() => setDialogOpen(false)}>Fechar</Button>
+          </DialogClose>
+        </DialogContent>
+      </Dialog>
     </header>
   )
 }
