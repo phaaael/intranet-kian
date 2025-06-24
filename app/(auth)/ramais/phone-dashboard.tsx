@@ -84,6 +84,8 @@ export default function PhoneDashboard({ rowsPerPage }: PhoneDashboardProps) {
     const filteredEmployees = employees.filter((employee) =>
       Object.values(employee)
         .join(" ")
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase()
         .includes(searchTerm.toLowerCase())
     )
