@@ -22,7 +22,7 @@ export default function HomeDashboard() {
       <div className="flex items-center px-4 py-3">
         <img
           className="h-10 w-10 rounded-full"
-          src="https://via.placeholder.com/150"
+          src="/kian-icon.png"
           alt="Avatar do usuário"
         />
         <div className="ml-3">
