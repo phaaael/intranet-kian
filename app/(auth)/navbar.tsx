@@ -83,14 +83,6 @@ export default function Navbar({ userName }: { userName: string }) {
               <DropdownMenuLabel className="text-center font-light uppercase text-xs">
                 {userName}
               </DropdownMenuLabel>
-              { isAdmin && (
-                <>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className='text-center justify-center'>
-                    <button onClick={() => setDialogOpen(true)}>Administração</button>
-                  </DropdownMenuItem>
-                </>
-              ) }
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Form action={logoutAction} className="text-center justify-center bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded !important">
@@ -101,21 +93,6 @@ export default function Navbar({ userName }: { userName: string }) {
           </DropdownMenu>
         </nav>
       </div>
-
-      <Dialog open={dialogOpen} onOpenChange={(open) => setDialogOpen(open)}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Administração</DialogTitle>
-            <DialogDescription>Gerencie as configurações administrativas do sistema.</DialogDescription>
-          </DialogHeader>
-          <div className="p-4">
-            <p>Opções administrativas virão aqui...</p>
-          </div>
-          <DialogClose asChild>
-            <Button variant="outline" onClick={() => setDialogOpen(false)}>Fechar</Button>
-          </DialogClose>
-        </DialogContent>
-      </Dialog>
     </header>
   )
 }
